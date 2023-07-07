@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:mycodes/screens/addContact.dart';
 import 'package:mycodes/screens/contactDetail.dart';
+import 'package:mycodes/screens/editPage.dart';
 import 'package:mycodes/screens/homePage.dart';
 
 Route onGenerateRoute(RouteSettings settings) {
@@ -12,6 +13,8 @@ Route onGenerateRoute(RouteSettings settings) {
     case ContactDetail.routeName:
       return MaterialPageRoute(
           builder: (context) => ContactDetail(settings.arguments as int));
+    case EditPage.routeName:
+      return MaterialPageRoute(builder: (context) => EditPage());
     default:
       return MaterialPageRoute(
           builder: (context) => Scaffold(

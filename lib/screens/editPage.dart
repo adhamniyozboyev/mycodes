@@ -1,21 +1,26 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:mycodes/data.dart';
 import 'package:mycodes/models/class.dart';
-import 'package:mycodes/screens/homePage.dart';
+import 'addContact.dart';
+import 'contactDetail.dart';
+import 'homePage.dart';
+import 'package:flutter/services.dart';
 
-Contact newContact = Contact(name: 'name', phoneNumber: 'phoneNumber');
-
-class AddContact extends StatelessWidget {
-  static const String routName = '';
-  AddContact({super.key});
-
-  final formKey = GlobalKey<FormState>();
+class EditPage extends StatefulWidget {
+  static const String routeName = '/edit';
+  const EditPage({super.key});
 
   @override
+  State<EditPage> createState() => _EditPageState();
+}
+
+class _EditPageState extends State<EditPage> {
+  final formKey = GlobalKey<FormState>();
+  int index = 0;
+  @override
   Widget build(BuildContext context) {
-    Contact new2 = Contact(name: 'name', phoneNumber: 'phoneNumber');
-    newContact = new2;
+    // Contact change=newContact;
+    Contact editContact = Contact(name: 'name', phoneNumber: 'number');
     return Scaffold(
       body: Form(
           key: formKey,
@@ -35,7 +40,7 @@ class AddContact extends StatelessWidget {
                   validator: (value) {
                     if (value == null || value.isEmpty) return 'Enter name';
 
-                    newContact.name = value[0].toUpperCase() +
+                    editContact.name = value[0].toUpperCase() +
                         value.substring(1).toLowerCase();
                     return null;
                   },
@@ -57,7 +62,7 @@ class AddContact extends StatelessWidget {
                       if (value == null || value.isEmpty || value.length < 13)
                         return 'Enter Phone Number';
 
-                      newContact.phoneNumber = value;
+                      editContact.phoneNumber = value;
 
                       return null;
                     },
@@ -75,7 +80,7 @@ class AddContact extends StatelessWidget {
                         !value.contains('@gmail.com')) {
                       return 'Enter correct email';
                     }
-                    newContact.email = value;
+                    editContact.email = value;
                     return null;
                   },
                   decoration: InputDecoration(
@@ -102,9 +107,10 @@ class AddContact extends StatelessWidget {
                     TextButton(
                         onPressed: () {
                           if (formKey.currentState!.validate()) {
+                            contacts.remove(newContact);
+                            contacts.add(editContact);
                             Navigator.pushNamedAndRemoveUntil(
                                 context, HomePage.routName, (route) => false);
-                            contacts.add(newContact);
                           }
                         },
                         child: Text(
